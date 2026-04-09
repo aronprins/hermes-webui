@@ -6,6 +6,7 @@ Tests use a self-signed certificate generated at test time via openssl.
 import http.client
 import json
 import os
+import shutil
 import ssl
 import subprocess
 import textwrap
@@ -135,6 +136,7 @@ class TestTLSConfigFlag(unittest.TestCase):
         self.assertEqual(r.stdout.strip(), "False")
 
 
+@unittest.skipUnless(shutil.which('openssl'), 'openssl CLI not available')
 class TestTLSEndToEnd(unittest.TestCase):
 
     @classmethod
@@ -199,15 +201,14 @@ class TestTLSEndToEnd(unittest.TestCase):
             _wait_for_server("127.0.0.1", port, use_ssl=False),
             "HTTP fallback server did not start after TLS failure",
         )
-        # Confirm TLS warning was printed
-        import fcntl
-        os.set_blocking(self._proc.stdout.fileno(), False)
-        output = ""
+        # Confirm TLS warning was printed — terminate cleanly and drain full output
+        self._proc.terminate()
         try:
-            output = self._proc.stdout.read(2000) or ""
-        except BlockingIOError:
-            output = ""
-        self.assertIn("TLS setup failed", output)
+            out, _ = self._proc.communicate(timeout=5)
+        except subprocess.TimeoutExpired:
+            self._proc.kill()
+            out, _ = self._proc.communicate()
+        self.assertIn("TLS setup failed", out)
 
 
 if __name__ == "__main__":
