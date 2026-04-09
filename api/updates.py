@@ -158,7 +158,7 @@ def _apply_update_inner(target):
         stashed = True
 
     # Pull with ff-only (no merge commits)
-    pull_out, pull_ok = _run_git(['pull', '--ff-only', compare_ref], path, timeout=30)
+    pull_out, pull_ok = _run_git(['pull', '--ff-only'], path, timeout=30)
     if not pull_ok:
         if stashed:
             _run_git(['stash', 'pop'], path)
