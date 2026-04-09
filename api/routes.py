@@ -894,7 +894,7 @@ def _handle_sse_stream(handler, parsed):
             _sse(handler, event, data)
             if event in ('done', 'error', 'cancel'):
                 break
-    except (BrokenPipeError, ConnectionResetError):
+    except (BrokenPipeError, ConnectionResetError, TimeoutError):
         pass
     return True
 
