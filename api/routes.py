@@ -875,7 +875,9 @@ def _handle_list_dir(handler, parsed):
                     break
             if not cli_meta:
                 return bad(handler, 'Session not found', 404)
-            workspace = cli_meta.get('workspace', '')
+            workspace = cli_meta.get('workspace') or ''
+            if not workspace:
+                return bad(handler, 'Session has no workspace', 400)
         except Exception:
             return bad(handler, 'Session not found', 404)
     try:
