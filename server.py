@@ -75,7 +75,18 @@ def main() -> None:
         print(f'[!!] Warning: Hermes agent found but missing modules: {missing}', flush=True)
         for mod, err in errors.items():
             print(f'     {mod}: {err}', flush=True)
-        print('     Agent features may not work correctly.', flush=True)
+        print('     Attempting to install missing dependencies...', flush=True)
+        from api.startup import auto_install_agent_deps
+        if auto_install_agent_deps():
+            # Re-check imports after install
+            ok, missing, errors = verify_hermes_imports()
+            if ok:
+                print('[ok] All agent modules now available.', flush=True)
+            else:
+                print(f'[!!] Still missing after install: {missing}', flush=True)
+                print('     Agent features may not work correctly.', flush=True)
+        else:
+            print('     Agent features may not work correctly.', flush=True)
 
     STATE_DIR.mkdir(parents=True, exist_ok=True)
     SESSION_DIR.mkdir(parents=True, exist_ok=True)

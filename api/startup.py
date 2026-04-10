@@ -1,20 +1,18 @@
 """Hermes Web UI -- startup helpers."""
 from __future__ import annotations
-import os, subprocess, sys
+import subprocess, sys
 from pathlib import Path
 
-def _agent_dir() -> Path | None:
-    hermes_home = Path(os.environ.get('HERMES_HOME', str(Path.home() / '.hermes')))
-    for raw in [os.environ.get('HERMES_WEBUI_AGENT_DIR', '').strip(), str(hermes_home / 'hermes-agent')]:
-        if not raw:
-            continue
-        p = Path(raw).expanduser()
-        if p.is_dir():
-            return p.resolve()
-    return None
 
-def auto_install_agent_deps() -> bool:
-    agent_dir = _agent_dir()
+def auto_install_agent_deps(agent_dir: Path | None = None) -> bool:
+    """Install missing agent dependencies via pip.
+
+    Uses the already-discovered agent directory from config.py.
+    Falls back gracefully on any error — never blocks server startup.
+    """
+    if agent_dir is None:
+        from api.config import _AGENT_DIR
+        agent_dir = _AGENT_DIR
     if agent_dir is None:
         print('[!!] Auto-install skipped: agent directory not found.', flush=True)
         return False
