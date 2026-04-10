@@ -114,7 +114,7 @@
     <!-- Profiles panel -->
     <div class="panel-view" id="panelProfiles">
       <div class="sidebar-section" style="padding-bottom:4px;display:flex;align-items:center;justify-content:space-between">
-        <div style="font-size:11px;color:var(--muted)" data-i18n="tab_profiles">Agent profiles</div>
+        <div style="font-size:11px;color:var(--muted)" data-i18n="profiles_header">Agent profiles</div>
         <button class="cron-btn run" style="padding:3px 8px;font-size:10px" onclick="toggleProfileForm()" data-i18n="new_profile">+ New profile</button>
       </div>
       <!-- Profile create form (hidden by default) -->
@@ -176,7 +176,7 @@
       <button class="mobile-hamburger" id="btnHamburger" onclick="toggleMobileSidebar()" title="Menu">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
-      <div style="flex:1;min-width:0;overflow:hidden"><div class="topbar-title" id="topbarTitle">Hermes</div><div class="topbar-meta" id="topbarMeta" data-i18n="new_conversation">Start a new conversation</div></div>
+      <div style="flex:1;min-width:0;overflow:hidden"><div class="topbar-title" id="topbarTitle">Hermes</div><div class="topbar-meta" id="topbarMeta" data-i18n="start_conversation">Start a new conversation</div></div>
       <div class="topbar-chips">
         <div id="profileChipWrap" style="position:relative">
           <div class="chip profile-chip" id="profileChip" onclick="toggleProfileDropdown()" title="Switch profile" style="cursor:pointer"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px;margin-right:3px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span id="profileChipLabel">default</span> &#9662;</div>
@@ -184,7 +184,7 @@
         </div>
         <div class="chip model" id="modelChip">GPT-5.4 Mini</div>
 
-        <button class="chip clear-btn" id="btnClearConv" onclick="clearConversation()" title="Clear all messages in this conversation" style="display:none">&#128465; <span data-i18n="copy">Clear</span></button>
+        <button class="chip clear-btn" id="btnClearConv" onclick="clearConversation()" title="Clear all messages in this conversation" style="display:none">&#128465; <span data-i18n="clear_conv">Clear</span></button>
         <button class="chip gear-btn" id="btnSettings" onclick="toggleSettings()" title="Settings" data-i18n-title="settings_title">&#9881;</button>
         <button class="chip mobile-files-btn" id="btnMobileFiles" onclick="toggleMobileFiles()" title="Files">&#128193;</button>
       </div>
